@@ -1,4 +1,6 @@
+# pyrefly: ignore [missing-import]
 from odoo import models, fields, api, _
+# pyrefly: ignore [missing-import]
 from odoo.exceptions import ValidationError
 
 class TechEquipment(models.Model):
@@ -42,6 +44,7 @@ class TechEquipment(models.Model):
     
     tax_value = fields.Monetary(
         string='Valor con Impuesto (15%)',
+        compute='_compute_tax_value',
         store=True,
         currency_field='currency_id'
     )
@@ -54,9 +57,49 @@ class TechEquipment(models.Model):
     notes = fields.Text(string='Notas Adicionales')
     purchase_date = fields.Date(string='Fecha de Compra')
     
+    rating_ids = fields.One2many(
+        'tech.rating', 
+        'equipment_id', 
+        string='Valoraciones'
+    )
+    
     _sql_constraints = [
         ('serial_unique', 'unique(serial)', 'El número de serie debe ser único!')
     ]
 
+    @api.constrains('serial')
+    def _check_serial_length(self):
+        for record in self:
+            if record.serial and len(record.serial) < 8:
+                raise ValidationError(_("El número de serie debe tener obligatoriamente al menos 8 caracteres."))
 
+    @api.depends('cost')
+    def _compute_tax_value(self):
+        for record in self:
+            record.tax_value = record.cost + (record.cost * 0.15)
 
+    @api.onchange('employee_id')
+    def _onchange_employee_id(self):
+        if self.employee_id:
+            self.state = 'assigned'
+
+    def action_available(self):
+        for record in self:
+            record.write({
+                'state': 'available',
+                'employee_id': False
+            })
+
+    def action_repair(self):
+        for record in self:
+            record.write({
+                'state': 'repair',
+                'employee_id': False
+            })
+
+    def action_decommission(self):
+        for record in self:
+            record.write({
+                'state': 'decommissioned',
+                'employee_id': False
+            })

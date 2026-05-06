@@ -21,6 +21,11 @@
             <field name="description">Monitores, teclados, mouse y accesorios</field>
         </record>
 
+        <record id="category_networking" model="tech.category">
+            <field name="name">Networking</field>
+            <field name="description">Equipos de redes como Routers y Switches</field>
+        </record>
+
         <record id="equipment_laptop_lenovo" model="tech.equipment">
             <field name="name">Lenovo ThinkPad X1</field>
             <field name="serial">LEN-2024-00123456</field>
@@ -46,6 +51,33 @@
             <field name="state">available</field>
             <field name="cost">3500.00</field>
             <field name="purchase_date">2023-11-20</field>
+        </record>
+
+        <record id="equipment_hp_desktop" model="tech.equipment">
+            <field name="name">HP EliteDesk 800</field>
+            <field name="serial">HPE-2023-11112222</field>
+            <field name="category_id" ref="category_desktop"/>
+            <field name="state">available</field>
+            <field name="cost">800.00</field>
+            <field name="purchase_date">2023-10-15</field>
+        </record>
+
+        <record id="equipment_logitech_mouse" model="tech.equipment">
+            <field name="name">Logitech MX Master 3</field>
+            <field name="serial">LOG-2023-33334444</field>
+            <field name="category_id" ref="category_peripheral"/>
+            <field name="state">available</field>
+            <field name="cost">100.00</field>
+            <field name="purchase_date">2023-12-05</field>
+        </record>
+
+        <record id="equipment_cisco_router" model="tech.equipment">
+            <field name="name">Cisco ISR 4321</field>
+            <field name="serial">CIS-2024-55556666</field>
+            <field name="category_id" ref="category_networking"/>
+            <field name="state">available</field>
+            <field name="cost">1100.00</field>
+            <field name="purchase_date">2024-03-01</field>
         </record>
     </data>
 </odoo>
