@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record model="ir.module.category" id="module_category_tech_inventory">
+        <field name="name">Tech Inventory</field>
+        <field name="description">Gestión de Inventario Tecnológico</field>
+        <field name="sequence">10</field>
+    </record>
+
     <record id="group_tech_user" model="res.groups">
         <field name="name">Usuario IT</field>
-        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="category_id" ref="module_category_tech_inventory"/>
     </record>
 
     <record id="group_tech_manager" model="res.groups">
         <field name="name">Gerente IT</field>
-        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="category_id" ref="module_category_tech_inventory"/>
         <field name="implied_ids" eval="[(4, ref('group_tech_user'))]"/>
     </record>
 
     <record id="group_tech_valuer" model="res.groups">
         <field name="name">Valorador</field>
-        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="category_id" ref="module_category_tech_inventory"/>
     </record>
 
     <record id="tech_equipment_user_rule" model="ir.rule">
